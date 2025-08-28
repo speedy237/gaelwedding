@@ -4,10 +4,10 @@ import HeroSection from "../components/HeroSection";
 /* HomePage.tsx */
 export default function HomePage() {
   const images = [
-    '/image2.jpg',
-    '/image3.jpg',
-    '/image4.jpg',
-    '/image5.jpg',
+    '/gaelwedding/image2.jpg',
+    '/gaelwedding/image3.jpg',
+    '/gaelwedding/image4.jpg',
+    '/gaelwedding/image5.jpg',
   ];
   return (
     <>
@@ -15,7 +15,7 @@ export default function HomePage() {
         title="Haudris & Gael Wedding"
         date="19-20 Décembre 2025"
         location="Douala, Cameroun"
-        imageUrl="/mariage.jpg"
+        imageUrl="/gaelwedding/mariage.jpg"
       />
       {/* Section histoire */}
       <section className="section section-light">
