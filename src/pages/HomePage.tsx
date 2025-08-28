@@ -8,7 +8,6 @@ export default function HomePage() {
     '/image3.jpg',
     '/image4.jpg',
     '/image5.jpg',
-    // … vos photos
   ];
   return (
     <>
