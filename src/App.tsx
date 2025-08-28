@@ -8,7 +8,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 
 const App: React.FC = () => (
-  <Router>
+  <Router basename="/gaelwedding/">
     <div className="flex flex-col min-h-screen">
       <Navbar />
       <main className="flex-grow">
