@@ -13,11 +13,9 @@ const scriptURL = "https://script.google.com/macros/s/AKfycbzYOuAuVLEdaHAGzrHmre
 
 const RsvpForm: React.FC = () => {
   const [name, setName] = useState('');
-  const [surname, setsurName] = useState('');
   const [tel, setTel] = useState('');
   const [email, setEmail] = useState('');
   const [events, setEvents] = useState<string[]>([]);
-  const [message, setMessage] = useState('');
   const [sent, setSent] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
