@@ -4,10 +4,10 @@ import HeroSection from "../components/HeroSection";
 /* HomePage.tsx */
 export default function HomePage() {
   const images = [
-    '/gaelwedding/images/image2.jpg',
-    '/gaelwedding/images/image3.jpg',
-    '/gaelwedding/images/image4.jpg',
-    '/gaelwedding/images/image5.jpg',
+    '/gaelwedding/image3.jpg',
+    '/gaelwedding/image4.jpg',
+    '/gaelwedding/image5.jpg',
+    '/gaelwedding/image7.jpg',
   ];
   return (
     <>
@@ -15,7 +15,7 @@ export default function HomePage() {
         title="Haudris & Gael Wedding"
         date="19-20 Décembre 2025"
         location="Douala, Cameroun"
-        imageUrl="/gaelwedding/images/mariage.jpg"
+        imageUrl="/gaelwedding/mariage.jpg"
       />
       {/* Section histoire */}
       <section className="section section-light">
@@ -30,7 +30,7 @@ Aujourd'hui, ils veulent placer leur amour sous le regard de Dieu. Comme le dit 
 Leur histoire est la preuve vivante qu'avec l'Éternel comme fondation, une famille peut s'épanouir. Ils vous invitent à célébrer avec eux lors de leurs mariages traditionnel et religieux, pour témoigner de leur amour et de leur foi en Dieu, le centre de leur vie.</p>
           </div>
           <div className="story-image">
-            <img src="/gaelwedding/images/image2.jpg" alt="Notre histoire" />
+            <img src="/gaelwedding/image2.jpg" alt="Notre histoire" />
           </div>
         </div>
       </section>
