@@ -1,12 +1,12 @@
-/* Palette de couleurs */
+/* Palette de couleurs adaptée au moodboard */
 :root {
-  --primary: #a585b0;         /* violet pastel chic */
-  --secondary: #f4e9f4;       /* rose très clair */
-  --accent: #eabfcb;          /* saumon doux */
-  --dark: #473b51;            /* violet foncé pour le texte */
-  --white: #ffffff;
-  --bg-light: #faf6fb;
-  --shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  --primary:   #7b2035; /* bordeaux profond (éléments principaux)   */
+  --secondary: #cf6c7d; /* rose poussière (fonds secondaires)        */
+  --accent:    #f5d7db; /* blush clair (fonds légers et détails)     */
+  --dark:      #311820; /* bordeaux très sombre (texte contrasté)     */
+  --white:     #ffffff;
+  --bg-light:  #efe5db; /* crème pour l’arrière-plan général          */
+  --shadow:    0 8px 20px rgba(0, 0, 0, 0.08);
 }
 
 /* Global */
@@ -72,7 +72,7 @@ a:hover {
 /* Hero section */
 .hero {
   height: 100vh;
-  background-image: url('/images/maries.jpg'); /* utilisez l'illustration */
+  background-image: url('/images/maries.jpg');
   background-size: cover;
   background-position: center;
   position: relative;
@@ -93,20 +93,11 @@ a:hover {
   padding: 10vh 2rem 4rem;
   color: var(--dark);
 }
-/*
-.hero-title {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-}
-*/
-
 
 .hero-subtitle {
   font-size: 1.2rem;
   margin-bottom: 2rem;
 }
-
-
 
 .hero-button {
   display: inline-block;
@@ -121,9 +112,7 @@ a:hover {
 
 .hero-button:hover {
   transform: translateY(-3px);
-} 
-
-
+}
 
 /* Section histoire */
 .section {
@@ -167,7 +156,6 @@ a:hover {
 }
 
 /* Countdown */
-/* Section compte à rebours */
 .countdown {
   display: flex;
   justify-content: center;
@@ -185,8 +173,8 @@ a:hover {
   width: 90px;
   height: 90px;
   border-radius: 50%;
-  background: var(--secondary);      /* rose pastel clair */
-  color: var(--primary);             /* violet pastel */
+  background: var(--secondary);
+  color: var(--primary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -197,7 +185,6 @@ a:hover {
   position: relative;
 }
 
-/* Bordure légère à l’intérieur du cercle */
 .countdown-circle::after {
   content: '';
   position: absolute;
@@ -206,36 +193,12 @@ a:hover {
   border: 2px solid rgba(255, 255, 255, 0.6);
 }
 
-/* Libellé sous le chiffre */
 .countdown-label {
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 1px;
   color: var(--dark);
 }
-
-/*.countdown {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  margin-top: 2rem;
-}
-
-.countdown-item {
-  text-align: center;
-}
-
-.countdown-item .number {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: var(--primary);
-}
-
-.countdown-item .label {
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  color: var(--dark);
-}*/
 
 /* Galerie */
 .gallery-grid {
@@ -263,47 +226,6 @@ a:hover {
 }
 
 /* RSVP form */
-/*.form-card {
-  background: var(--white);
-  padding: 2rem;
-  border-radius: 1rem;
-  box-shadow: var(--shadow);
-  max-width: 480px;
-  margin: 0 auto;
-}
-
-.form-card label {
-  display: block;
-  font-weight: 600;
-  margin-bottom: 0.25rem;
-}
-
-.form-card input,
-.form-card textarea {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 0.5rem;
-  margin-bottom: 1rem;
-  font-size: 1rem;
-}
-
-.form-card button {
-  width: 100%;
-  background: var(--primary);
-  color: var(--white);
-  padding: 0.8rem;
-  border: none;
-  border-radius: 0.5rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.form-card button:hover {
-  background: #8b6e93;
-}*/
-/* Cases à cocher personnalisées */
 .event-checkbox {
   display: flex;
   align-items: center;
@@ -346,7 +268,6 @@ a:hover {
   opacity: 1;
 }
 
-/* Ajustements esthétiques du formulaire */
 .form-card h3 {
   color: var(--dark);
   margin-bottom: 1rem;
@@ -366,8 +287,19 @@ a:hover {
   border-radius: 0.5rem;
   margin-bottom: 0.8rem;
   font-size: 1rem;
-  background: #fff;
+  /*background: #fff;*/
+  /* Couleurs adaptées au moodboard */
+  background-color: var(--accent);  /* fond blush clair */
+  color: var(--dark); 
 }
+
+/* Placeholders pour qu’ils soient suffisamment lisibles mais plus discrets */
+.form-card input::placeholder,
+.form-card textarea::placeholder {
+  color: var(--primary);            /* bordeaux profond */
+  opacity: 0.6;                     /* légèrement atténué */
+}
+
 
 .form-card button {
   width: 100%;
@@ -382,13 +314,12 @@ a:hover {
   transition: background 0.3s ease;
 }
 
+/* Survol du bouton RSVP : nuance plus foncée de la couleur primaire */
 .form-card button:hover {
-  background: #8b6e93;
+  background: #62172d;
 }
 
-
 /* Cagnotte */
-/* Section Cagnotte */
 .cagnotte-section {
   background: var(--bg-light);
   padding: 4rem 2rem;
@@ -474,15 +405,15 @@ a:hover {
   transition: background 0.2s ease;
 }
 
+/* Survol du bouton de paiement */
 .payment-button:hover {
-  background: #8b6e93;
+  background: #62172d;
 }
-
 
 .rsvp-container {
   display: flex;
-  justify-content: center; /* centre horizontalement */
-  align-items: center;    /* centre verticalement */
-  min-height: 100vh;      /* occupe toute la hauteur de la fenêtre */
-  padding: 4rem 2rem;     /* garde de l’espace autour si nécessaire */
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 4rem 2rem;
 }

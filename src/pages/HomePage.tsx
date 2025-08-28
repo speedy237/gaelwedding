@@ -4,37 +4,41 @@ import HeroSection from "../components/HeroSection";
 /* HomePage.tsx */
 export default function HomePage() {
   const images = [
-    '/images1.jpg',
-    '/images2.jpg',
-    '/images3.jpg',
-    '/images4.jpg',
+    '/image2.jpg',
+    '/image3.jpg',
+    '/image4.jpg',
+    '/image5.jpg',
     // … vos photos
   ];
   return (
     <>
       <HeroSection
-        title="Haudris & Gael"
-        date="18 octobre 2025"
-        time="20h00"
-        location="Parcours Vita, Douala"
-        imageUrl="/images1.jpg"
+        title="Haudris & Gael Wedding"
+        date="19-20 Décembre 2025"
+        location="Douala, Cameroun"
+        imageUrl="/mariage.jpg"
       />
       {/* Section histoire */}
       <section className="section section-light">
         <div className="story-container">
           <div className="story-text">
             <h2>Notre histoire</h2>
-            <p>Nous nous sommes rencontrés il y a dix ans… (racontez votre parcours).</p>
+            <p>Une Faveur de l'Éternel
+Il y a bien des années, deux âmes, Raissa et Gaël, se sont rencontrées, et leur amitié est devenue un amour enraciné dans leur foi. Leur union civile il y a deux ans et demi fut la première étape, rapidement bénie par l'arrivée de leur fille, Ezriela, un véritable ange.
+
+Aujourd'hui, ils veulent placer leur amour sous le regard de Dieu. Comme le dit Proverbes 18:22, "Celui qui trouve une femme a trouvé le bonheur; c'est une faveur qu'il a reçue de l'Éternel." Gaël a trouvé en Raissa son bonheur, et Raissa en Gaël son roc.
+
+Leur histoire est la preuve vivante qu'avec l'Éternel comme fondation, une famille peut s'épanouir. Ils vous invitent à célébrer avec eux lors de leurs mariages traditionnel et religieux, pour témoigner de leur amour et de leur foi en Dieu, le centre de leur vie.</p>
           </div>
           <div className="story-image">
-            <img src="/images2.jpg" alt="Notre histoire" />
+            <img src="/image2.jpg" alt="Notre histoire" />
           </div>
         </div>
       </section>
       {/* Compte à rebours */}
       <section className="section section-dark" style={{ textAlign: 'center' }}>
         <h2>Le grand jour arrive !</h2>
-        <CountdownTimer targetDate="2025-10-18T15:00:00" />
+        <CountdownTimer targetDate="2025-12-19T15:00:00" />
       </section>
       {/* Galerie */}
       <section className="section section-light">
