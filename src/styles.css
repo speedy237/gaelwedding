@@ -12,14 +12,14 @@
 /* Global */
 body {
   margin: 0;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   background: var(--bg-light);
   color: var(--dark);
   line-height: 1.6;
 }
 
 h1, h2, h3 {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Libre Baskerville', serif;
   color: var(--dark);
 }
 
