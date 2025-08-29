@@ -5,9 +5,7 @@ import HeroSection from "../components/HeroSection";
 export default function HomePage() {
   const images = [
     '/gaelwedding/image3.jpg',
-    '/gaelwedding/image4.jpg',
     '/gaelwedding/image5.jpg',
-    '/gaelwedding/image7.jpg',
   ];
   return (
     <>
