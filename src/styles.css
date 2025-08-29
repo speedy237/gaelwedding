@@ -12,7 +12,7 @@
 /* Global */
 body {
   margin: 0;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Montserrat', serif;
   background: var(--bg-light);
   color: var(--dark);
   line-height: 1.6;
@@ -92,6 +92,13 @@ a:hover {
   text-align: center;
   padding: 10vh 2rem 4rem;
   color: var(--dark);
+}
+
+.hero-title {
+  font-family: 'Sacramento', cursive;
+  font-size: 4rem;
+  letter-spacing: 0.02em;
+  margin-bottom: 0.5rem;
 }
 
 .hero-subtitle {
