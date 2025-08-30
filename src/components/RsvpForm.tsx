@@ -23,21 +23,28 @@ const RsvpForm: React.FC = () => {
     e.preventDefault();
     setError(null);
     try {
+      console.log("Searching for name:", name);
       const params = new URLSearchParams({
         action: 'search',
         name: name.trim(),
       });
+      console.log(params.toString());
+      console.log("------------------")
+      console.log(`${scriptURL}?${params.toString()}`);
       const res = await fetch(`${scriptURL}?${params.toString()}`, {
         method: 'GET',
       });
       const data = await res.json();
       if (data.events && data.events.length > 0) {
+        console.log("Found events:", data.events);
         setAvailableEvents(data.events);
         setStep('events');
       } else {
+        console.log("No events found for this name.");
         setError("Aucun événement correspondant trouvé.");
       }
     } catch (err) {
+      console.error(err);
       setError("Erreur lors de la recherche.");
     }
   };
@@ -55,6 +62,7 @@ const RsvpForm: React.FC = () => {
       });
       await fetch(`${scriptURL}?${params.toString()}`, {
         method: 'GET',
+        mode: 'no-cors', 
         // Vous pouvez utiliser POST + FormData si vous voulez sauver aussi l'email/téléphone
       });
       setStep('done');
