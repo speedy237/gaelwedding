@@ -1,141 +1,155 @@
-// src/components/RsvpForm.tsx
 import React, { useState } from 'react';
 
-
-/**
- * Formulaire RSVP amélioré :
- * - Demande le nom de l’invité.
- * - Permet de sélectionner les événements via des cases à cocher.
- * - Laisse un message facultatif.
- */
-
-const scriptURL = "https://script.google.com/macros/s/AKfycbzYOuAuVLEdaHAGzrHmreTIerY4cFoYxnOF4Yd0BvR9CiTZE15_cv5sldnIVOudbbun/exec";
+const scriptURL = 'https://script.google.com/macros/s/AKfycbzYOuAuVLEdaHAGzrHmreTIerY4cFoYxnOF4Yd0BvR9CiTZE15_cv5sldnIVOudbbun/exec';
 
 const RsvpForm: React.FC = () => {
   const [name, setName] = useState('');
   const [tel, setTel] = useState('');
   const [email, setEmail] = useState('');
-  const [events, setEvents] = useState<string[]>([]);
-  const [sent, setSent] = useState(false);
+  const [availableEvents, setAvailableEvents] = useState<string[]>([]);
+  const [selectedEvents, setSelectedEvents] = useState<string[]>([]);
+  const [step, setStep] = useState<'form' | 'events' | 'done'>('form');
   const [error, setError] = useState<string | null>(null);
 
-  const eventOptions = [
-    { id: 'Dote', label: 'Le Mariage traditionnel: Le 19 Decembre 2025 à 18H, Nyalla, Douala' },
-    { id: 'Benediction', label: 'La Bénédiction nuptiale: Le 20 Decembre 2025 à 10h, Eglise Sainte Monique de Makepe, Douala' },
-    { id: 'Soiree', label: 'Soirée dansante: Le 20 décembre 2025 à 20h, Hôtel Vendôme, Makepe, Douala' },
-  ];
-
-  const handleCheckboxChange = (eventId: string) => {
-    setEvents(prev =>
-      prev.includes(eventId)
-        ? prev.filter(e => e !== eventId)
-        : [...prev, eventId]
-    );
+  // Options d'affichage (texte) ; l'id correspond au nom d'onglet
+  const labels: Record<string, string> = {
+    Dot: 'Mariage traditionnel – 19 décembre 2025 à 18 h ( Nyalla, Douala )',
+    Benediction: 'Bénédiction nuptiale – 20 décembre 2025 à 10 h ( Sainte Monique, Makepe )',
+    Soiree: 'Soirée dansante – 20 décembre 2025 à 20 h ( Hôtel Vendôme, Makepe )',
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  // 1. Cherche les événements en fonction du nom
+  const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
-
     try {
-      const formData = new FormData();
-      formData.append("Nom et Prénom", name);
-      formData.append("Télephone", tel);
-      formData.append("Email", email);
-      formData.append("Evenements", events.join(", "));
-      const response = await fetch(scriptURL, {
-        method: "POST",
-        body: formData,
-        mode: 'no-cors' // 'no-cors' pour éviter les erreurs CORS
-        
+      const params = new URLSearchParams({
+        action: 'search',
+        name: name.trim(),
       });
-      if (response.ok) {
-        setSent(true);
+      const res = await fetch(`${scriptURL}?${params.toString()}`, {
+        method: 'GET',
+      });
+      const data = await res.json();
+      if (data.events && data.events.length > 0) {
+        setAvailableEvents(data.events);
+        setStep('events');
       } else {
-        setSent(true);
-        //setError("Erreur lors de l'envoi des données.");
+        setError("Aucun événement correspondant trouvé.");
       }
-
-    } catch {
-      setError("Une erreur est survenue. Merci de réessayer.");
+    } catch (err) {
+      setError("Erreur lors de la recherche.");
     }
   };
 
-  if (sent) {
+  // 2. Enregistre la confirmation pour chaque événement
+  const handleConfirm = async () => {
+    setError(null);
+    try {
+      const params = new URLSearchParams({
+        action: 'confirm',
+        name: name.trim(),
+        selected: selectedEvents.join(','),
+        tel,
+        email,
+      });
+      await fetch(`${scriptURL}?${params.toString()}`, {
+        method: 'GET',
+        // Vous pouvez utiliser POST + FormData si vous voulez sauver aussi l'email/téléphone
+      });
+      setStep('done');
+    } catch {
+      setError("Erreur lors de l'enregistrement.");
+    }
+  };
+
+  // Gestion des cases à cocher
+  const toggleEvent = (id: string) => {
+    setSelectedEvents(prev =>
+      prev.includes(id) ? prev.filter(e => e !== id) : [...prev, id],
+    );
+  };
+
+  if (step === 'done') {
     return (
       <div className="form-card">
-      <p className="text-center text-xl font-semibold text-primary">
-        Merci ! Votre réponse a bien été enregistrée.
-      </p>
+        <p className="text-center text-xl font-semibold text-primary">
+          Merci ! Votre participation a bien été enregistrée.
+        </p>
       </div>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} className="form-card">
-      <h3 className="text-2xl font-serif mb-4 text-center">Confirmer votre Presence</h3>
+    <div className="form-card">
+      <h3 className="text-2xl font-serif mb-4 text-center">Confirmation de présence</h3>
+      {error && <p className="text-red-600 mb-4 text-center">{error}</p>}
 
-      {error && (
-        <p className="text-red-600 mb-4 text-center">{error}</p>
+      {step === 'form' && (
+        <form onSubmit={handleSearch}>
+          <div className="mb-4">
+            <label htmlFor="name">Nom et prénom</label>
+            <input
+              id="name"
+              type="text"
+              value={name}
+              onChange={e => setName(e.target.value)}
+              required
+              placeholder="ex. Jordan YIYUEME"
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="tel">Téléphone</label>
+            <input
+              id="tel"
+              type="tel"
+              value={tel}
+              onChange={e => setTel(e.target.value)}
+              required
+              placeholder="ex. +237 695 74 14 10"
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              required
+              placeholder="ex. jean.fotso@gmail.com"
+            />
+          </div>
+          <button type="submit">Vérifier mes invitations</button>
+        </form>
       )}
 
-      <div className="mb-4">
-        <label htmlFor="name">Nom complet</label>
-        <input
-          id="name"
-          type="text"
-          value={name}
-          onChange={e => setName(e.target.value)}
-          required
-          placeholder="Ex. : Jean Fotso"
-        />
-      </div>
-       <div className="mb-4">
-        <label htmlFor="tel">Téléphone</label>
-        <input
-          id="tel"
-          type="tel"
-          value={tel}
-          onChange={e => setTel(e.target.value)}
-          required
-          placeholder="ex. +237 695 74 14 10"
-        />
-      </div> <div className="mb-4">
-        <label htmlFor="email">Email</label>
-        <input
-          id="email"
-          type="email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          required
-          placeholder="ex. fotso.jean@gmail.com"
-        />
-      </div>
-
-
-
-      <div className="mb-4">
-        <span className="block font-semibold mb-2">
-          Sélectionnez les événements auxquels vous participerez
-        </span>
-        {eventOptions.map(opt => (
-          <label key={opt.id} className="event-checkbox">
-            <input
-              type="checkbox"
-              checked={events.includes(opt.id)}
-              onChange={() => handleCheckboxChange(opt.id)}
-            />
-            <span>{opt.label}</span>
-          </label>
-        ))}
-      </div>
-
-      <div className="mb-4">
-       
-      </div>
-
-      <button type="submit">Envoyer</button>
-    </form>
+      {step === 'events' && (
+        <div>
+          <p className="mb-4">
+            Sélectionnez les événements auxquels vous serez présent(e) :
+          </p>
+          {availableEvents.map(ev => (
+            <label key={ev} className="event-checkbox">
+              <input
+                type="checkbox"
+                checked={selectedEvents.includes(ev)}
+                onChange={() => toggleEvent(ev)}
+              />
+              <span>{labels[ev]}</span>
+            </label>
+          ))}
+          <button
+            className="mt-4"
+            type="button"
+            onClick={handleConfirm}
+            disabled={selectedEvents.length === 0}
+          >
+            Valider ma présence
+          </button>
+        </div>
+      )}
+    </div>
   );
 };
 
