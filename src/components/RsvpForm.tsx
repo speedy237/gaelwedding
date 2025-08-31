@@ -20,8 +20,11 @@ const RsvpForm: React.FC = () => {
 
   // 1. Cherche les événements en fonction du nom
   const handleSearch = async (e: React.FormEvent) => {
+    console.log("Handle search called");
     e.preventDefault();
+    console.log("------------------")
     setError(null);
+    console.log("Searching for name:", name);
     try {
       console.log("Searching for name:", name);
       const params = new URLSearchParams({
@@ -62,7 +65,6 @@ const RsvpForm: React.FC = () => {
       });
       await fetch(`${scriptURL}?${params.toString()}`, {
         method: 'GET',
-        mode: 'no-cors', 
         // Vous pouvez utiliser POST + FormData si vous voulez sauver aussi l'email/téléphone
       });
       setStep('done');
