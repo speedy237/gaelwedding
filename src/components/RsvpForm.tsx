@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const scriptURL = 'https://script.google.com/macros/s/AKfycbzYOuAuVLEdaHAGzrHmreTIerY4cFoYxnOF4Yd0BvR9CiTZE15_cv5sldnIVOudbbun/exec';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbw_WuvQjqyQgCUKAQlo-SFHUpxGg9XUXX7avkpIynY5wo4ukh1SjiA9Os-oBCRyuJ7Y/exec';
 
 const RsvpForm: React.FC = () => {
   const [name, setName] = useState('');
