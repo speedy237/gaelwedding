@@ -1,7 +1,7 @@
 // RsvpForm.tsx
 import React, { useState } from 'react';
 
-const scriptURL = 'https://script.google.com/macros/s/AKfycbzUJlnmQQakiwgP5b6mMkzF21iht_ZKsizRPZbLE60CZSHL0KjsIFMfIN51nkjVQ7zw/exec';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbywpZ8BFgh-FHncgIJrvQ8-M-AKjNqRQGOmLQ3t3sEb-6dvRlvBSiazgCKxVR3c98a-/exec';
 
 // Petit utilitaire JSONP
 function jsonp<T = any>(url: string, timeoutMs = 15000): Promise<T> {
