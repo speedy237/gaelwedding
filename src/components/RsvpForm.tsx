@@ -1,6 +1,29 @@
+// RsvpForm.tsx
 import React, { useState } from 'react';
 
-const scriptURL = 'https://script.google.com/macros/s/AKfycbz2irFRdxgiqNL9S2jgZE0r8bNOlSFu4c79uL-jnxJpePTPPk5AoYzzDJvfrdGx_awR/exec';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbzUJlnmQQakiwgP5b6mMkzF21iht_ZKsizRPZbLE60CZSHL0KjsIFMfIN51nkjVQ7zw/exec';
+
+// Petit utilitaire JSONP
+function jsonp<T = any>(url: string, timeoutMs = 15000): Promise<T> {
+  return new Promise((resolve, reject) => {
+    const cbName = `__gs_cb_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+    (window as any)[cbName] = (data: T) => { cleanup(); resolve(data); };
+
+    const s = document.createElement('script');
+    s.src = url + (url.includes('?') ? '&' : '?') + `callback=${cbName}`;
+    s.async = true;
+    s.onerror = () => { cleanup(); reject(new Error('JSONP failed')); };
+    document.body.appendChild(s);
+
+    const t = setTimeout(() => { cleanup(); reject(new Error('JSONP timeout')); }, timeoutMs);
+
+    function cleanup() {
+      clearTimeout(t);
+      try { delete (window as any)[cbName]; } catch {}
+      s.remove();
+    }
+  });
+}
 
 const RsvpForm: React.FC = () => {
   const [name, setName] = useState('');
@@ -11,39 +34,23 @@ const RsvpForm: React.FC = () => {
   const [step, setStep] = useState<'form' | 'events' | 'done'>('form');
   const [error, setError] = useState<string | null>(null);
 
-  // Options d'affichage (texte) ; l'id correspond au nom d'onglet
   const labels: Record<string, string> = {
-    Dot: 'Mariage traditionnel – 19 décembre 2025 à 18 h ( Nyalla, Douala )',
-    Benediction: 'Bénédiction nuptiale – 20 décembre 2025 à 10 h ( Sainte Monique, Makepe )',
-    Soiree: 'Soirée dansante – 20 décembre 2025 à 20 h ( Hôtel Vendôme, Makepe )',
+    Dot: 'Mariage traditionnel – 19 déc. 2025 à 18 h (Nyalla, Douala)',
+    Benediction: 'Bénédiction nuptiale – 20 déc. 2025 à 10 h (Ste Monique, Makepe)',
+    Soiree: 'Soirée dansante – 20 déc. 2025 à 20 h (Hôtel Vendôme, Makepe)',
   };
 
-  // 1. Cherche les événements en fonction du nom
+  // 1) Recherche (JSONP)
   const handleSearch = async (e: React.FormEvent) => {
-    console.log("Handle search called");
     e.preventDefault();
-    console.log("------------------")
     setError(null);
-    console.log("Searching for name:", name);
     try {
-      console.log("Searching for name:", name);
-      const params = new URLSearchParams({
-        action: 'search',
-        name: name,
-      });
-      console.log(params.toString());
-      console.log("------------------")
-      console.log(`${scriptURL}?${params.toString()}`);
-      const res = await fetch(`${scriptURL}?${params.toString()}`, {
-        method: 'GET',
-      });
-      const data = await res.json();
-      if (data.events && data.events.length > 0) {
-        console.log("Found events:", data.events);
+      const url = `${scriptURL}?action=search&name=${encodeURIComponent(name)}`;
+      const data = await jsonp<{ events: string[] }>(url);
+      if (data.events?.length) {
         setAvailableEvents(data.events);
         setStep('events');
       } else {
-        console.log("No events found for this name.");
         setError("Aucun événement correspondant trouvé.");
       }
     } catch (err) {
@@ -52,39 +59,32 @@ const RsvpForm: React.FC = () => {
     }
   };
 
-  // 2. Enregistre la confirmation pour chaque événement
+  // 2) Confirmation (JSONP)
   const handleConfirm = async () => {
     setError(null);
     try {
-      const params = new URLSearchParams({
-        action: 'confirm',
-        name: name.trim(),
-        selected: selectedEvents.join(','),
-        tel,
-        email,
-      });
-      await fetch(`${scriptURL}?${params.toString()}`, {
-        method: 'GET',
-        // Vous pouvez utiliser POST + FormData si vous voulez sauver aussi l'email/téléphone
-      });
+      const url = `${scriptURL}?action=confirm` +
+        `&name=${encodeURIComponent(name.trim())}` +
+        `&selected=${encodeURIComponent(selectedEvents.join(','))}` +
+        `&tel=${encodeURIComponent(tel)}` +
+        `&email=${encodeURIComponent(email)}`;
+      await jsonp<{ result: string }>(url);
       setStep('done');
-    } catch {
+    } catch (err) {
+      console.error(err);
       setError("Erreur lors de l'enregistrement.");
     }
   };
 
-  // Gestion des cases à cocher
   const toggleEvent = (id: string) => {
-    setSelectedEvents(prev =>
-      prev.includes(id) ? prev.filter(e => e !== id) : [...prev, id],
-    );
+    setSelectedEvents(prev => prev.includes(id) ? prev.filter(e => e !== id) : [...prev, id]);
   };
 
   if (step === 'done') {
     return (
       <div className="form-card">
         <p className="text-center text-xl font-semibold text-primary">
-          Merci ! Votre participation a bien été enregistrée.
+          Merci ! Votre participation a bien été enregistrée.
         </p>
       </div>
     );
@@ -99,36 +99,21 @@ const RsvpForm: React.FC = () => {
         <form onSubmit={handleSearch}>
           <div className="mb-4">
             <label htmlFor="name">Nom et prénom</label>
-            <input
-              id="name"
-              type="text"
-              value={name}
-              onChange={e => setName(e.target.value)}
-              required
-              placeholder="ex. Jordan YIYUEME"
-            />
+            <input id="name" type="text" value={name}
+              onChange={e => setName(e.target.value)} required
+              placeholder="ex. Jordan YIYUEME" />
           </div>
           <div className="mb-4">
             <label htmlFor="tel">Téléphone</label>
-            <input
-              id="tel"
-              type="tel"
-              value={tel}
-              onChange={e => setTel(e.target.value)}
-              required
-              placeholder="ex. +237 695 74 14 10"
-            />
+            <input id="tel" type="tel" value={tel}
+              onChange={e => setTel(e.target.value)} required
+              placeholder="ex. +237 695 74 14 10" />
           </div>
           <div className="mb-4">
             <label htmlFor="email">Email</label>
-            <input
-              id="email"
-              type="email"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-              required
-              placeholder="ex. jean.fotso@gmail.com"
-            />
+            <input id="email" type="email" value={email}
+              onChange={e => setEmail(e.target.value)} required
+              placeholder="ex. jean.fotso@gmail.com" />
           </div>
           <button type="submit">Vérifier mes invitations</button>
         </form>
@@ -136,9 +121,7 @@ const RsvpForm: React.FC = () => {
 
       {step === 'events' && (
         <div>
-          <p className="mb-4">
-            Sélectionnez les événements auxquels vous serez présent(e) :
-          </p>
+          <p className="mb-4">Sélectionnez les événements auxquels vous serez présent(e) :</p>
           {availableEvents.map(ev => (
             <label key={ev} className="event-checkbox">
               <input
@@ -146,15 +129,11 @@ const RsvpForm: React.FC = () => {
                 checked={selectedEvents.includes(ev)}
                 onChange={() => toggleEvent(ev)}
               />
-              <span>{labels[ev]}</span>
+              <span>{labels[ev] || ev}</span>
             </label>
           ))}
-          <button
-            className="mt-4"
-            type="button"
-            onClick={handleConfirm}
-            disabled={selectedEvents.length === 0}
-          >
+          <button className="mt-4" type="button"
+            onClick={handleConfirm} disabled={selectedEvents.length === 0}>
             Valider ma présence
           </button>
         </div>
