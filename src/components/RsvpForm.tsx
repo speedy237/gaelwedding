@@ -29,7 +29,7 @@ const RsvpForm: React.FC = () => {
       console.log("Searching for name:", name);
       const params = new URLSearchParams({
         action: 'search',
-        name: name.trim(),
+        name: name,
       });
       console.log(params.toString());
       console.log("------------------")
