@@ -1,6 +1,6 @@
 // RsvpForm.tsx
 import React, { useState } from 'react';
-
+import PhoneInput from 'react-phone-number-input';
 const scriptURL = 'https://script.google.com/macros/s/AKfycbywpZ8BFgh-FHncgIJrvQ8-M-AKjNqRQGOmLQ3t3sEb-6dvRlvBSiazgCKxVR3c98a-/exec';
 
 // Petit utilitaire JSONP
@@ -27,7 +27,7 @@ function jsonp<T = any>(url: string, timeoutMs = 15000): Promise<T> {
 
 const RsvpForm: React.FC = () => {
   const [name, setName] = useState('');
-  const [tel, setTel] = useState('');
+  const [phone, setPhone] = useState<string | undefined>(undefined);
   const [email, setEmail] = useState('');
   const [availableEvents, setAvailableEvents] = useState<string[]>([]);
   const [selectedEvents, setSelectedEvents] = useState<string[]>([]);
@@ -37,21 +37,22 @@ const RsvpForm: React.FC = () => {
   const labels: Record<string, string> = {
     Dot: 'Mariage traditionnel – 19 déc. 2025 à 18 h (Nyalla, Douala)',
     Benediction: 'Bénédiction nuptiale – 20 déc. 2025 à 10 h (Ste Monique, Makepe)',
-    Soiree: 'Soirée dansante – 20 déc. 2025 à 20 h (Hôtel Vendôme, Makepe)',
+    Soirée: 'Soirée dansante – 20 déc. 2025 à 20 h (Hôtel Vendôme, Makepe)',
   };
 
   // 1) Recherche (JSONP)
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    if (!phone) { setError('Merci de saisir un numéro de téléphone.'); return; }
     try {
-      const url = `${scriptURL}?action=search&name=${encodeURIComponent(name)}`;
+      const url = `${scriptURL}?action=search&name=${encodeURIComponent(phone)}`;
       const data = await jsonp<{ events: string[] }>(url);
       if (data.events?.length) {
         setAvailableEvents(data.events);
         setStep('events');
       } else {
-        setError("Aucun événement correspondant trouvé.");
+        setError("Aucun événement correspondant trouvé pour ce numéro.");
       }
     } catch (err) {
       console.error(err);
@@ -62,11 +63,12 @@ const RsvpForm: React.FC = () => {
   // 2) Confirmation (JSONP)
   const handleConfirm = async () => {
     setError(null);
+    if (!phone) { setError('Numéro manquant.'); return; }
     try {
       const url = `${scriptURL}?action=confirm` +
-        `&name=${encodeURIComponent(name.trim())}` +
+        `&phone=${encodeURIComponent(phone)}` +
         `&selected=${encodeURIComponent(selectedEvents.join(','))}` +
-        `&tel=${encodeURIComponent(tel)}` +
+        `&name=${encodeURIComponent(name)}` +
         `&email=${encodeURIComponent(email)}`;
       await jsonp<{ result: string }>(url);
       setStep('done');
@@ -105,9 +107,16 @@ const RsvpForm: React.FC = () => {
           </div>
           <div className="mb-4">
             <label htmlFor="tel">Téléphone</label>
-            <input id="tel" type="tel" value={tel}
-              onChange={e => setTel(e.target.value)} required
-              placeholder="ex. +237 695 74 14 10" />
+            <PhoneInput
+              id="tel"
+              placeholder="ex. +237 6 99 99 99 99"
+              value={phone}
+              onChange={setPhone}
+              defaultCountry="CM"
+              international
+              countryCallingCodeEditable={false}
+              required  />
+            
           </div>
           <div className="mb-4">
             <label htmlFor="email">Email</label>

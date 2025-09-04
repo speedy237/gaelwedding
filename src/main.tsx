@@ -3,6 +3,9 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import './styles.css'; 
 import App from './App.tsx'
+// src/main.tsx
+import 'react-phone-number-input/style.css';
+
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

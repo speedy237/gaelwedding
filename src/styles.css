@@ -82,8 +82,8 @@ a:hover {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom right,
-    rgba(255,255,255,0.6), rgba(255,255,255,0.9));
+  /*background: linear-gradient(to bottom right,
+    rgba(255,255,255,0.6), rgba(255,255,255,0.9));*/
 }
 
 .hero-content {
@@ -423,4 +423,31 @@ a:hover {
   align-items: center;
   min-height: 100vh;
   padding: 4rem 2rem;
+}
+
+/* Harmonise react-phone-number-input avec ta charte */
+.phone-input .PhoneInputCountry {
+  border: 1px solid #ddd;
+  border-radius: 0.5rem 0 0 0.5rem;
+  padding: 0.4rem 0.6rem;
+  background: #fff;
+  box-shadow: var(--shadow);
+}
+
+.phone-input .PhoneInputInput {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-left: none;
+  border-radius: 0 0.5rem 0.5rem 0;
+  font-size: 1rem;
+  background: #fff;
+  box-shadow: var(--shadow);
+}
+
+
+.phone-input:focus-within .PhoneInputInput,
+.phone-input:focus-within .PhoneInputCountry {
+  outline: none;
+  border-color: var(--primary);
 }
