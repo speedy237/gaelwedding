@@ -19,13 +19,16 @@ export default function HomePage() {
       <section className="section section-light">
         <div className="story-container">
           <div className="story-text">
-            <h2>Notre histoire</h2>
-            <p>Une Faveur de l'Éternel
-Il y a bien des années, deux âmes, Raissa et Gaël, se sont rencontrées, et leur amitié est devenue un amour enraciné dans leur foi. Leur union civile il y a deux ans et demi fut la première étape, rapidement bénie par l'arrivée de leur fille, Ezriela, un véritable ange.
+            <h2>Save The Date</h2>
+            <p><span className="verset">Proverbes 18:22</span>: Qui trouve une femme trouve le bonheur, et il obtient la faveur de l'Éternel
 
-Aujourd'hui, ils veulent placer leur amour sous le regard de Dieu. Comme le dit Proverbes 18:22, "Celui qui trouve une femme a trouvé le bonheur; c'est une faveur qu'il a reçue de l'Éternel." Gaël a trouvé en Raissa son bonheur, et Raissa en Gaël son roc.
+Chers amis, chère famille,
 
-Leur histoire est la preuve vivante qu'avec l'Éternel comme fondation, une famille peut s'épanouir. Ils vous invitent à célébrer avec eux lors de leurs mariages traditionnel et religieux, pour témoigner de leur amour et de leur foi en Dieu, le centre de leur vie.</p>
+C'est avec une grande joie que nous vous invitons à célébrer notre union religieuse et traditionnelle à Douala, au Cameroun, les 19 et 20 décembre. Venez vivre avec nous ces journées mémorables, remplies d'amour et de traditions. Nous avons hâte de vous retrouver.
+
+Affectueusement,
+
+Gaël et Haudris</p>
           </div>
           <div className="story-image">
             <img src="/gaelwedding/image2.jpg" alt="Notre histoire" />
