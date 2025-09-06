@@ -42,6 +42,21 @@ a:hover {
   z-index: 1000;
 }
 
+/* Fait que les liens de la navbar se répartissent sur plusieurs lignes si besoin */
+.navbar-links {
+  display: flex;
+  flex-wrap: wrap;      /* autorise le retour à la ligne */
+  justify-content: center;
+  gap: 0.5rem 1rem;     /* espace horizontal et vertical */
+}
+
+.navbar-links a {
+  display: block;
+  padding: 0.5rem 0.75rem;
+  white-space: nowrap; /* garde chaque lien sur une seule ligne */
+}
+
+
 .navbar-inner {
   max-width: 1200px;
   margin: 0 auto;
@@ -318,6 +333,17 @@ a:hover {
 .event-checkbox input[type="checkbox"]:checked::after {
   opacity: 1;
 }
+
+.form-card {
+  max-width: 480px;
+  width: 100%;
+  margin: 0 auto;      /* centre le conteneur horizontalement */
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: var(--shadow);
+  background: var(--white);
+}
+
 
 .form-card h3 {
   color: var(--dark);

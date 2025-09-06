@@ -1,7 +1,7 @@
 // RsvpForm.tsx
 import React, { useState } from 'react';
 import PhoneInput from 'react-phone-number-input';
-const scriptURL = 'https://script.google.com/macros/s/AKfycbx832a5xZIav1WHNNiGrA7yN1FXV7JgS3_Khca4EluWJ-PrFcvPcwapWy7UGGhUOmYs/exec';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbzMcPqFlUjdshq53cvWfAZhMgs_C5GvDwrFnTzvYpdzcPdH4SiJGupMZILczoTE7Pkl/exec';
 
 // Petit utilitaire JSONP
 function jsonp<T = any>(url: string, timeoutMs = 15000): Promise<T> {
@@ -37,7 +37,7 @@ const RsvpForm: React.FC = () => {
   const labels: Record<string, string> = {
     Dot: 'Mariage traditionnel – 19 déc. 2025 à 18 h (Nyalla, Douala)',
     Benediction: 'Bénédiction nuptiale – 20 déc. 2025 à 10 h (Ste Monique, Makepe)',
-    Soiree: 'Soirée dansante – 20 déc. 2025 à 20 h (Hôtel Vendôme, Makepe)',
+    Soirée: 'Soirée dansante – 20 déc. 2025 à 20 h (Hôtel Vendôme, Makepe)',
   };
 
   // 1) Recherche (JSONP)
@@ -46,7 +46,9 @@ const RsvpForm: React.FC = () => {
     setError(null);
     if (!phone) { setError('Merci de saisir un numéro de téléphone.'); return; }
     try {
-      const url = `${scriptURL}?action=search&phone=${encodeURIComponent(phone.slice(1))}`;
+      const normalizedPhone = phone?.replace(/\D/g, '') ?? '';
+      //const url = `${scriptURL}?action=search&phone=${encodeURIComponent(phone.slice(1))}`;
+      const url = `${scriptURL}?action=search&phone=${normalizedPhone}`;
       console.log("Fetching URL:", url);
       const data = await jsonp<{ events: string[] }>(url);
       if (data.events?.length) {
@@ -66,9 +68,12 @@ const RsvpForm: React.FC = () => {
     setError(null);
     if (!phone) { setError('Numéro manquant.'); return; }
     try {
-      const url = `${scriptURL}?action=confirm` +
+      const normalizedPhone = phone?.replace(/\D/g, '') ?? '';
+      /*const url = `${scriptURL}?action=confirm` +
         `&phone=${encodeURIComponent(phone.slice(1))}` +
-        `&selected=${encodeURIComponent(selectedEvents.join(','))}`;
+        `&selected=${encodeURIComponent(selectedEvents.join(','))}`;*/
+        const url = `${scriptURL}?action=confirm&phone=${normalizedPhone}&selected=${encodeURIComponent(selectedEvents.join(','))}`;
+
       console.log("Fetching URL2:", url);
       await jsonp<{ result: string }>(url);
       setStep('done');
@@ -93,7 +98,10 @@ const RsvpForm: React.FC = () => {
   }
 
   return (
-    <div className="form-card">
+
+      <div className="flex items-center justify-center min-h-screen">
+
+         <div className="form-card">
       <h3 className="text-2xl font-serif mb-4 text-center">Confirmation de présence</h3>
       {error && <p className="text-red-600 mb-4 text-center">{error}</p>}
 
@@ -148,6 +156,11 @@ const RsvpForm: React.FC = () => {
         </div>
       )}
     </div>
+
+    
+      </div>
+    
+   
   );
 };
 
