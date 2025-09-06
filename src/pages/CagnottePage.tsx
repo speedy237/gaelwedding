@@ -34,8 +34,18 @@ const CagnottePage: React.FC = () => (
     <div className="container">
       <h1 className="title">Participer à notre projet de mariage</h1>
       <p className="subtitle">
-        Votre présence est déjà un cadeau précieux. Si vous souhaitez toutefois nous aider à financer notre mariage ou notre voyage de noces, vous pouvez le faire via un des moyens ci‑dessous.
+        Votre présence à notre mariage est le plus beau des cadeaux.
+        Nous sommes profondément reconnaissants de pouvoir partager ce jour unique avec vous. 
+        Votre amour et votre soutien comptent énormément pour nous, et rendent ce moment encore plus spécial.
+
       </p>
+       <p className="subtitle">
+        Comme nous ne sommes pas sur place, nous privilégions les dons monétaires plutôt que les cadeaux matériels. 
+        Pour cela, nous avons mis à disposition différents moyens de transfert électronique, afin que chacun puisse contribuer selon ses possibilités.
+
+      </p>
+      <p className="subtitle">
+        Merci du fond du cœur pour votre générosité, votre amour et votre soutien. Nous avons hâte de célébrer ce nouveau chapitre de notre vie à vos côtés !</p>
 
       <div className="payment-grid">
         {paymentOptions.map(opt => (

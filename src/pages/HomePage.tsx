@@ -1,5 +1,6 @@
 import CountdownTimer from "../components/CountdownTimer";
 import HeroSection from "../components/HeroSection";
+import SaveSection from "../components/SaveSection";
 
 /* HomePage.tsx */
 export default function HomePage() {
@@ -11,30 +12,17 @@ export default function HomePage() {
     <>
       <HeroSection
         title="Haudris & Gael Wedding"
-        date="19-20 Décembre 2025"
-        location="Douala, Cameroun"
+        date=""
+        location=""
         imageUrl="/gaelwedding/mariage.jpg"
       />
       {/* Section histoire */}
-      <section className="section section-light">
-        <div className="story-container">
-          <div className="story-text">
-            <h2>Save The Date</h2>
-            <p><span className="verset">Proverbes 18:22</span>: Qui trouve une femme trouve le bonheur, et il obtient la faveur de l'Éternel
-
-Chers amis, chère famille,
-
-C'est avec une grande joie que nous vous invitons à célébrer notre union religieuse et traditionnelle à Douala, au Cameroun, les 19 et 20 décembre. Venez vivre avec nous ces journées mémorables, remplies d'amour et de traditions. Nous avons hâte de vous retrouver.
-
-Affectueusement,
-
-Gaël et Haudris</p>
-          </div>
-          <div className="story-image">
-            <img src="/gaelwedding/image2.jpg" alt="Notre histoire" />
-          </div>
-        </div>
-      </section>
+    <SaveSection title="Proverbes 18:22" 
+                 subtitle="Qui trouve une femme trouve le bonheur, et il obtient la faveur de l'Éternel."
+                  message="C'est avec une grande joie que nous vous invitons à célébrer notre union religieuse et traditionnelle à Douala, au Cameroun, les 19 et 20 décembre. Venez vivre avec nous ces journées mémorables, remplies d'amour et de traditions. Nous avons hâte de vous retrouver."
+                  salutation="Affectueusement,"
+                  married="Gael et Haudris"  
+                 />
       {/* Compte à rebours */}
       <section className="section section-dark" style={{ textAlign: 'center' }}>
         <h2>Le grand jour arrive !</h2>

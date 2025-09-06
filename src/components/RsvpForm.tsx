@@ -1,7 +1,7 @@
 // RsvpForm.tsx
 import React, { useState } from 'react';
 import PhoneInput from 'react-phone-number-input';
-const scriptURL = 'https://script.google.com/macros/s/AKfycbywpZ8BFgh-FHncgIJrvQ8-M-AKjNqRQGOmLQ3t3sEb-6dvRlvBSiazgCKxVR3c98a-/exec';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbx832a5xZIav1WHNNiGrA7yN1FXV7JgS3_Khca4EluWJ-PrFcvPcwapWy7UGGhUOmYs/exec';
 
 // Petit utilitaire JSONP
 function jsonp<T = any>(url: string, timeoutMs = 15000): Promise<T> {
@@ -37,7 +37,7 @@ const RsvpForm: React.FC = () => {
   const labels: Record<string, string> = {
     Dot: 'Mariage traditionnel – 19 déc. 2025 à 18 h (Nyalla, Douala)',
     Benediction: 'Bénédiction nuptiale – 20 déc. 2025 à 10 h (Ste Monique, Makepe)',
-    Soirée: 'Soirée dansante – 20 déc. 2025 à 20 h (Hôtel Vendôme, Makepe)',
+    Soiree: 'Soirée dansante – 20 déc. 2025 à 20 h (Hôtel Vendôme, Makepe)',
   };
 
   // 1) Recherche (JSONP)
@@ -46,7 +46,8 @@ const RsvpForm: React.FC = () => {
     setError(null);
     if (!phone) { setError('Merci de saisir un numéro de téléphone.'); return; }
     try {
-      const url = `${scriptURL}?action=search&name=${encodeURIComponent(phone)}`;
+      const url = `${scriptURL}?action=search&phone=${encodeURIComponent(phone.slice(1))}`;
+      console.log("Fetching URL:", url);
       const data = await jsonp<{ events: string[] }>(url);
       if (data.events?.length) {
         setAvailableEvents(data.events);
@@ -66,10 +67,9 @@ const RsvpForm: React.FC = () => {
     if (!phone) { setError('Numéro manquant.'); return; }
     try {
       const url = `${scriptURL}?action=confirm` +
-        `&phone=${encodeURIComponent(phone)}` +
-        `&selected=${encodeURIComponent(selectedEvents.join(','))}` +
-        `&name=${encodeURIComponent(name)}` +
-        `&email=${encodeURIComponent(email)}`;
+        `&phone=${encodeURIComponent(phone.slice(1))}` +
+        `&selected=${encodeURIComponent(selectedEvents.join(','))}`;
+      console.log("Fetching URL2:", url);
       await jsonp<{ result: string }>(url);
       setStep('done');
     } catch (err) {

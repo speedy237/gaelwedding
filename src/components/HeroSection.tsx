@@ -15,7 +15,7 @@ export default function HeroSection({ title, date,  location, imageUrl }: Props)
     <section className="hero" style={{ backgroundImage: `url(${imageUrl})` }}>
       <div className="hero-content">
         <h1 className="hero-title">{title}</h1>
-        <p className="hero-subtitle">{date}, {location}</p>
+        <p className="hero-subtitle">{date} {location}</p>
         <br />
     
         <Link to="/rsvp" className="hero-button">Confirmer votre présence</Link>
