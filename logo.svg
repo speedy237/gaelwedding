@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+  Simple wedding logo in SVG format.
+  This logo features a hand‑drawn heart filled with burgundy color and the initials
+  of the couple. It is designed to be elegant and adaptable to different sizes.
+-->
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Heart shape: drawn using a symmetric cubic Bézier curve. -->
+  <path
+    d="M100 30
+       C 70 0,   0 0,   0 60
+       C 0 120, 100 180, 100 190
+       C 100 180, 200 120, 200 60
+       C 200 0,  130 0,  100 30 Z"
+    fill="#7b2035"/>
+  <!-- Initials of the couple. Adjust the font family if desired. -->
+  <text
+    x="100"
+    y="115"
+    text-anchor="middle"
+    dominant-baseline="middle"
+    font-family="'Cormorant Garamond', serif"
+    font-size="48"
+    fill="#efe5db">
+    H &amp; G
+  </text>
+</svg>
