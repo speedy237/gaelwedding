@@ -8,7 +8,7 @@ import { faPaypal as faPaypalBrand } from '@fortawesome/free-brands-svg-icons';
 const paymentOptions = [
   {
     id: 'orange',
-    title: 'Orange Money',
+    title: 'Paiement Mobile',
     description: 'Contribuez directement via Orange Money ou Mobile Money. Indiquez notre numéro de mobile pour envoyer votre participation.',
     icon: faMobileAlt,
     link: 'https://pay.mesomb.com/l/b5jZkxPEKJIkeSufM523', // remplacez par votre lien ou code QR
@@ -18,7 +18,7 @@ const paymentOptions = [
     title: 'PayPal',
     description: 'Utilisez votre compte PayPal pour un transfert sécurisé. Cliquez sur le bouton ci‑dessous pour être redirigé.',
     icon: faPaypalBrand,
-    link: 'https://www.paypal.com/paypalme/haudrisandgaelweddin', // remplacez par votre lien PayPal.me
+    link: 'https://www.paypal.com/paypalme/haudrisgael', // remplacez par votre lien PayPal.me
   },
   {
     id: 'cb',

@@ -47,7 +47,7 @@ a:hover {
   display: flex;
   flex-wrap: wrap;      /* autorise le retour à la ligne */
   justify-content: center;
-  gap: 0.5rem 1rem;     /* espace horizontal et vertical */
+  gap: 0.2rem 0.4rem;     /* espace horizontal et vertical */
 }
 
 .navbar-links a {
@@ -727,4 +727,11 @@ a:hover {
 @media (max-width: 640px) {
   .program-title { font-size: 2rem; }
   .program-card { padding: 1rem; }
+}
+
+@media (max-width: 768px) {
+  .navbar-links a {
+    font-size: 0.75rem;   /* 12px */
+    padding: 0.3rem 0.5rem;
+  }
 }
