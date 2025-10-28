@@ -15,6 +15,7 @@
   "dependencies": {
     "firebase": "^12.1.0",
     "lucide-react": "^0.542.0",
+    "netlify-cli": "^23.9.5",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-phone-number-input": "^3.4.12",
