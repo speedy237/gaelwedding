@@ -5,8 +5,8 @@ import SaveSection from "../components/SaveSection";
 /* HomePage.tsx */
 export default function HomePage() {
   const images = [
-    '/{import.meta.env.BASE_URL}/image3.jpg',
-    '/{import.meta.env.BASE_URL}/image5.jpg',
+      `${import.meta.env.BASE_URL}image3.jpg`,
+      `${import.meta.env.BASE_URL}image5.jpg`
   ];
   return (
     <>
@@ -14,7 +14,7 @@ export default function HomePage() {
         title="Haudris & Gael Wedding"
         date=""
         location=""
-        imageUrl="/{import.meta.env.BASE_URL}/mariage.jpg"
+        imageUrl={`${import.meta.env.BASE_URL}mariage.jpg`}
       />
       {/* Section histoire */}
     <SaveSection title="Proverbes 18:22" 

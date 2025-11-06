@@ -9,6 +9,7 @@ interface Props {
 
 /* HeroSection.tsx */
 export default function SaveSection({ title, subtitle, message,salutation,married}: Props) {
+  
   return (
     <section className="saved" >
       <div className="save-content">
@@ -21,7 +22,7 @@ export default function SaveSection({ title, subtitle, message,salutation,marrie
             
       </div>
       <div className="story-image">
-            <img src="/{import.meta.env.BASE_URL}/image2.jpg" alt="Notre histoire" />
+            <img src={`${import.meta.env.BASE_URL}image2.jpg`}  alt="Notre histoire" />
           </div>
     </section>
   );
