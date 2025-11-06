@@ -87,7 +87,7 @@ a:hover {
 /* Hero section */
 .hero {
   height: 100vh;
-  background-image: url('/gaelwedding/mariage.jpg');
+  background-image: url('/{import.meta.env.BASE_URL}/mariage.jpg');
   background-size: cover;
   background-position: center;
   position: relative;

@@ -21,7 +21,7 @@ export default function SaveSection({ title, subtitle, message,salutation,marrie
             
       </div>
       <div className="story-image">
-            <img src="/gaelwedding/image2.jpg" alt="Notre histoire" />
+            <img src="/{import.meta.env.BASE_URL}/image2.jpg" alt="Notre histoire" />
           </div>
     </section>
   );
