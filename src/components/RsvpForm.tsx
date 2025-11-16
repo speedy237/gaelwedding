@@ -28,7 +28,6 @@ function jsonp<T = any>(url: string, timeoutMs = 15000): Promise<T> {
 const RsvpForm: React.FC = () => {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState<string | undefined>(undefined);
-  const [email, setEmail] = useState('');
   const [availableEvents, setAvailableEvents] = useState<string[]>([]);
   const [selectedEvents, setSelectedEvents] = useState<string[]>([]);
   const [step, setStep] = useState<'form' | 'events' | 'done'>('form');
@@ -126,12 +125,7 @@ const RsvpForm: React.FC = () => {
               required  />
             
           </div>
-          <div className="mb-4">
-            <label htmlFor="email">Email</label>
-            <input id="email" type="email" value={email}
-              onChange={e => setEmail(e.target.value)} required
-              placeholder="ex. jean.fotso@gmail.com" />
-          </div>
+          
           <button type="submit">Vérifier mes invitations</button>
         </form>
       )}
